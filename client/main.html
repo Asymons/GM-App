@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Starter Template - Materialize</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="main.css" type="text/css" rel="stylesheet"/>
+    <!--<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+</head>
+<body onload="getLocation()">
+<nav class="blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container"
+                                          class="brand-logo white-text">Carpooler</a>
+        <ul class="right hide-on-med-and-down">
+            <li>GM-APP</li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="http://google.com/" data-activates="nav-mobile" class="button-collapse"><i
+                class="material-icons">menu</i></a>
+    </div>
+</nav>
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+
+
+
+        <div class="row center">
+            <!--<div class="input-field col s12">-->
+                <!--<form action="location" method="post">-->
+                <!---->
+                <!--<input placeholder="Username" id="username" name="username" type="text" class="validate">-->
+                <!--</form>-->
+
+                <div class="card blue lighten-1 col offset-s3 s6 ">
+                    <div class="card-content white-text">
+                        <span class="card-title">Your Location</span>
+                        <p id="demo"></p>
+                    </div>
+                </div>
+
+                <!--<p id="location"></p>-->
+                <!--<form action="request" post="method">-->
+                <!--&lt;!&ndash;<button onclick="getLocation()">Ask for a ride!</button>&ndash;&gt;-->
+                <!--<input type="text" id="location" name="location" value="">-->
+                <!--<label for="location">Selected Location: </label>-->
+                <!--<input type="submit" value="Ask for a ride!"/>-->
+                <!--</form>-->
+            <!--</div>-->
+        </div>
+
+        <div class="col s3 chip">
+            Tap on map to request destination.
+        </div>
+
+
+
+        <!--<h4 class="header center blue-text">GM-APP</h4>-->
+
+
+        <div class="row center">
+
+
+
+            <div id="map" style="width:100%;height:400px"></div>
+
+
+            <script>
+
+                function myMap() {
+
+                    var myAddr = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyBfXmyoFWfbnirL4C0Yp3Xr6qvENCpp9dE";
+
+                    setTimeout(function(){
+                        $.get(myAddr, function (data) {
+//                            document.getElementById("demo").setAttribute("value", data.results[0].formatted_address);
+//                document.getElementById("location").innerHTML = "Selected Location: " + data.results[0].formatted_address;
+                            console.log(data);
+                        });
+                    }, 500);
+
+
+
+                    setTimeout(function () {
+                        var mapCanvas = document.getElementById("map");
+                        var mapOptions = {
+                            center: new google.maps.LatLng(lat, long),
+                            zoom: 10
+                        };
+                        var map = new google.maps.Map(mapCanvas, mapOptions);
+                        google.maps.event.addListener(map, 'click', function (event) {
+                            var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + event.latLng.lat() + "," + event.latLng.lng() + "&key=AIzaSyBfXmyoFWfbnirL4C0Yp3Xr6qvENCpp9dE";
+
+                            $.get(url, function (data) {
+                                document.getElementById("location").setAttribute("value", data.results[0].formatted_address);
+//                document.getElementById("location").innerHTML = "Selected Location: " + data.results[0].formatted_address;
+                                console.log(data.results[0].formatted_address);
+                            });
+//              alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() );
+                        });
+                    }, 500);
+
+                }
+
+
+            </script>
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfXmyoFWfbnirL4C0Yp3Xr6qvENCpp9dE&callback=myMap"
+                    async defer></script>
+            <!--<h5 class="header col s12 light black-text">Help</h5>-->
+
+        </div>
+
+        <!--<div class="container">-->
+
+        <!--</div>-->
+
+
+
+
+        <div class="row center">
+            <div class="input-field col s12">
+                <!--<form action="location" method="post">-->
+                <!---->
+                <!--<input placeholder="Username" id="username" name="username" type="text" class="validate">-->
+                <!--</form>-->
+
+                <!--<p id="location"></p>-->
+                <form action="request" method="post">
+                    <!--<button onclick="getLocation()">Ask for a ride!</button>-->
+                    <!--<input type="text" id="location" name="location" value="">-->
+
+                    <input disabled value="." id="location" type="text" class="black-text">
+                    <label for="location" class="black-text">Location: </label>
+
+                    <!--<label for="location">Selected Location: </label>-->
+                    <!--<a class="waves-effect waves-light btn">button</a>-->
+                    <input type="submit" class="waves-effect waves btn blue lighten-1" value="Ask for a ride!"/>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+</footer>
+
+
+<!--  Scripts-->
+
+<script src="materialize.min.js"></script>
+<script src="geolocation.js"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>-->
+<!--<script src="map.js"></script>-->
+<!--<script src="scripts/init.js"></script>-->
+
+</body>
+</html>
